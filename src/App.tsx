@@ -4,29 +4,13 @@
  */
 
 import { useState, useEffect } from 'react';
-import { 
-  Wrench, 
-  Settings, 
-  ShieldCheck, 
-  Phone, 
-  MapPin, 
-  ChevronRight, 
-  Menu, 
+import {
+  Menu,
   X,
-  Gauge,
-  Construction,
-  FlaskConical,
-  Compass,
-  Trophy,
-  History,
-  Truck,
-  Package,
-  Globe,
-  Droplets,
-  Wind
+  ChevronRight
 } from 'lucide-react';
 
-// ✅ FIXED HERE
+// ✅ correct animation library
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Product {
@@ -42,43 +26,22 @@ const PRODUCTS: Product[] = [
     id: 's-1',
     name: 'Automatic Compaction Tester',
     category: 'soil',
-    description: 'Heavy-duty automatic soil compactor for proctor and CBR tests with digital control.',
-    specs: ['Programmable Stroke', 'Adjustable Drop Height', 'Interchangeable Rammers']
-  },
-  {
-    id: 's-2',
-    name: 'CBR Test Apparatus',
-    category: 'soil',
-    description: 'Complete set for Laboratory CBR testing including load frame, molds, and surcharge weights.',
-    specs: ['50kN Capacity', 'Dual Speed Choice', 'Digital Displacement Sensing']
+    description: 'Heavy-duty soil compactor.',
+    specs: ['Programmable', 'Adjustable Height']
   },
   {
     id: 'c-1',
-    name: 'Compression Testing Machine',
+    name: 'Compression Machine',
     category: 'concrete',
-    description: 'High-strength frame for testing concrete cubes and cylinders with peak load indicators.',
-    specs: ['2000kN Range', 'Calibrated to ISO 7500-1', 'Safety Splatter Gates']
-  },
-  {
-    id: 'c-2',
-    name: 'Schmidt Hammer (Type N)',
-    category: 'concrete',
-    description: 'Original rebound hammer for non-destructive quality testing of concrete structures.',
-    specs: ['Standard Impact Energy', 'Integrated Scale', 'Carrying Case Included']
+    description: 'Concrete strength tester.',
+    specs: ['2000kN', 'Digital']
   },
   {
     id: 'v-1',
-    name: 'Robotic Total Station',
+    name: 'Total Station',
     category: 'survey',
-    description: 'High-precision tracking for construction layout and automated surveying tasks.',
-    specs: ['1" Angular Accuracy', '1000m Reflectorless', 'Long-range Bluetooth']
-  },
-  {
-    id: 'v-2',
-    name: 'Multi-GNSS Receiver',
-    category: 'survey',
-    description: 'All-constellation satellite receiver with IMU tilt-compensation for faster field work.',
-    specs: ['GPS/GLO/GAL/BDS', 'RTK Performance', 'IP68 Rugged Design']
+    description: 'High precision survey tool.',
+    specs: ['1" Accuracy', 'Bluetooth']
   }
 ];
 
@@ -93,12 +56,13 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const filteredProducts = activeTab === 'all' 
-    ? PRODUCTS 
-    : PRODUCTS.filter(p => p.category === activeTab);
+  const filteredProducts =
+    activeTab === 'all'
+      ? PRODUCTS
+      : PRODUCTS.filter(p => p.category === activeTab);
 
   return (
-    <div className="font-sans text-primary-navy">
+    <div className="font-sans">
 
       {/* NAVBAR */}
       <nav className={`fixed top-0 w-full z-50 ${scrolled ? 'bg-black py-4' : 'bg-transparent py-6'}`}>
@@ -114,7 +78,7 @@ export default function App() {
       {/* MOBILE MENU */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -131,19 +95,14 @@ export default function App() {
           <h1 className="text-5xl font-bold mb-6">
             PRECISION YOU TRUST
           </h1>
-
-          <p className="mb-6">
-            Founded on the pillars of <strong>Precision, Reliability, and Integrity</strong>
-          </p>
-
-          <button className="px-6 py-3 bg-yellow-400 text-black font-bold">
-            Explore
-          </button>
+          <a href="#products" className="px-6 py-3 bg-yellow-400 text-black font-bold inline-flex items-center gap-2">
+            Explore <ChevronRight />
+          </a>
         </div>
       </section>
 
       {/* PRODUCTS */}
-      <section className="py-20 px-6">
+      <section id="products" className="py-20 px-6">
         <div className="flex gap-2 mb-10">
           {(['all', 'soil', 'concrete', 'survey'] as const).map(tab => (
             <button
